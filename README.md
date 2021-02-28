@@ -1,0 +1,2 @@
+# ViRush
+Coronavirus themed game
