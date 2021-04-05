@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - ShootingEnemy
   layers:
   - Default
   - TransparentFX
@@ -15,8 +14,8 @@ TagManager:
   - UI
   - 
   - 
-  - bullet
-  - outOfPlay
+  - 
+  - 
   - 
   - 
   - 
@@ -48,9 +47,6 @@ TagManager:
     locked: 0
   - name: Arena
     uniqueID: 2341272761
-    locked: 0
-  - name: Map Objects
-    uniqueID: 974663393
     locked: 0
   - name: Characters
     uniqueID: 2901232705

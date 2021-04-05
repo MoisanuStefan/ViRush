@@ -8,19 +8,12 @@ public class EnemyMovement : MonoBehaviour
     public Rigidbody2D rb;
     public float moveSpeed = 5f;
     public Transform[] points;
-    public int playArea;
-
-
-    private float[,] coords_x = { { -32f, -16f }, { -9f, 4.5f } };
-    private float[,] coords_y = { { 6f, 18f }, { -3.5f, 4f } };
-
-
     int current;
     Vector3 destination;
     private void Start()
     {
-        float randX = Random.Range(coords_x[playArea, 0], coords_x[playArea, 1]);
-        float randY = Random.Range(coords_y[playArea, 0], coords_y[playArea, 1]);
+        float randX = Random.Range(-9f, 4.5f);
+        float randY = Random.Range(-3.5f, 4f);
         destination = new Vector3(randX, randY, 0);
     }
 
@@ -32,8 +25,8 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            float randX = Random.Range(coords_x[playArea, 0], coords_x[playArea, 1]);
-            float randY = Random.Range(coords_y[playArea, 0], coords_y[playArea, 1]);
+            float randX = Random.Range(-9f, 4.5f);
+            float randY = Random.Range(-3.5f, 4f);
             destination = new Vector3(randX, randY, 0);
         }
         /*if (transform.position != points[current].position)
@@ -46,7 +39,5 @@ public class EnemyMovement : MonoBehaviour
             current = (current + 1) % points.Length;
         }*/
     }
-
-   
 
 }
