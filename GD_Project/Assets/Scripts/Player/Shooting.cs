@@ -24,7 +24,7 @@ public class Shooting : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
                 Shoot();
                 nextAttackTime = Time.time + 1 / attackRate;

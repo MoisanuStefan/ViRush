@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     public Camera cam;
 
+    private bool isMoving;
+
     Vector2 movement;
     Vector2 mousePos;
     // Update is called once per frame
@@ -19,9 +21,15 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
+        if (movement.x != 0 || movement.y != 0)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+        animator.SetBool("isMoving", isMoving);
 
         mousePos= cam.ScreenToWorldPoint(Input.mousePosition);
     }
