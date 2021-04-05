@@ -11,6 +11,17 @@ public class Bullet : MonoBehaviour
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
         }
+        if (collision.gameObject.tag.Equals("ShootingEnemy"))
+        {
+            collision.gameObject.GetComponent<ShootingEnemy>().TakeDamage(damage);
+        }
+
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
+
     }
 }
