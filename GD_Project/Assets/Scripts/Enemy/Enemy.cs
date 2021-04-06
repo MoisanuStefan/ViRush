@@ -13,16 +13,31 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         currentHealth = maxHealth;
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-
+        StartCoroutine("FlashSprite");
         if (currentHealth <= 0)
         {
             animator.SetTrigger("dead");
+        }
+    }
+
+    IEnumerator FlashSprite()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        int counter = 2;
+        while (counter > 0)
+        {
+            sr.enabled = false;
+            yield return new WaitForSeconds(0.05f);
+            sr.enabled = true;
+            yield return new WaitForSeconds(0.05f);
+            counter--;
         }
     }
 

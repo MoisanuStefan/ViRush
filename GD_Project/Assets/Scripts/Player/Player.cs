@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Healthbar healthbar;
     public int maxHealth = 100;
     int currentHealth;
 
@@ -14,16 +15,20 @@ public class Player : MonoBehaviour
 
     private bool isMoving;
     private bool isDamageable;
+    private bool isDead;
 
     Vector2 movement;
     Vector2 mousePos;
     // Start is called before the first frame update
     void Start()
     {
+
+        isDead = false;
         isDamageable = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        healthbar.SetMaxHealth(maxHealth);
     }
 
     public void TakeDamage(int damage)
@@ -31,9 +36,11 @@ public class Player : MonoBehaviour
         if (isDamageable)
         {
             currentHealth -= damage;
-
+            healthbar.SetHealth(currentHealth);
             if (currentHealth <= 0)
             {
+                isDead = true;
+                rb.velocity = Vector2.zero;
                 animator.SetTrigger("Dead");
             }
         }
@@ -47,7 +54,7 @@ public class Player : MonoBehaviour
     public void onDeadAnimationFinished()
     {
         FindObjectOfType<GameManager>().EndGame();
-        Destroy(gameObject);
+       
         gameObject.SetActive(false);
     }
     // Update is called once per frame
@@ -72,7 +79,10 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         //Movement handled here
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        if (!isDead)
+        {
+            rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        }
 
         Vector2 lookDir = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
