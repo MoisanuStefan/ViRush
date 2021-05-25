@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public int quarantineTreshold = 20;
     public float spawnRate = 2f;
-    public GameObject enemy;
+    public GameObject virus;
+    public GameObject bat;
     float nextSpawn;
     Vector2 whereToSpawn;
     float randX;
     float randY;
+    private int virusCount = 0;
+    public QuarantineController quarantine;
+    public Teleport teleport;
+    private bool quarantineEnabled = false;
+
+
 
     private float[,] coords_x = { { -32f, -16f }, { -10f, 5.7f }, { 12f, 27f }, { 12f, 27f }, { -32f, -16f } };
     private float[,] coords_y = { { 6f, 18f }, { -5.6f, 6.2f }, { 6f, 18f }, { -6f, -12.5f }, { -6f, -12.5f } };
@@ -18,7 +26,8 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        quarantineEnabled = false;
+        virusCount = 0;
     }
 
     // Update is called once per frame
@@ -30,14 +39,42 @@ public class EnemySpawner : MonoBehaviour
         }
         if(Time.time > nextSpawn)
         {
-            int random_area = Random.Range(0, 5);
-            randX = Random.Range(coords_x[random_area, 0], coords_x[random_area, 1]);
-            randY = Random.Range(coords_y[random_area, 0], coords_y[random_area, 1]);
-            whereToSpawn = new Vector2(randX, randY);
-            GameObject spawnedEnemy = Instantiate(enemy, whereToSpawn, Quaternion.identity);
-            spawnedEnemy.GetComponent<EnemyMovement>().playArea = random_area;
+            GameObject spawnedEnemy;
+            int randomNumber = Random.Range(0, 20);
+
+            whereToSpawn = transform.position + Vector3.up * 1.5f;
+
+            if (randomNumber > 17)
+            {
+                spawnedEnemy = Instantiate(bat, whereToSpawn, Quaternion.identity);
+            }
+            else
+            {
+                virusCount++;
+                spawnedEnemy = Instantiate(virus, whereToSpawn, Quaternion.identity);
+            }
+            spawnedEnemy.SendMessage("SetSpawner", this);
+            
+     
+           
             nextSpawn = Time.time + spawnRate;
+            if (virusCount >= quarantineTreshold && !quarantineEnabled)
+            {
+                quarantineEnabled = true;
+                quarantine.StartQuarantine();
+                teleport.SetDisabledValue(true);
+            }
+            else if (virusCount < quarantineTreshold && quarantineEnabled)
+            {
+                quarantineEnabled = false;
+                quarantine.EndQuarantine();
+                teleport.SetDisabledValue(false);
+            }
         }
         
+    }
+    public void DecreaseVirusCount()
+    {
+        virusCount--;
     }
 }

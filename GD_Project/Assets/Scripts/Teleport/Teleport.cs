@@ -8,6 +8,7 @@ public class Teleport : MonoBehaviour
     public float speed;
     public float cooldownTime;
     public bool isActive = true;
+    public bool isDisabled = false;
 
 
     private bool isTriggered;
@@ -18,20 +19,20 @@ public class Teleport : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isDisabled = false;
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isTriggered)
+        if (isTriggered && !isDisabled)
         {
             float step = speed * Time.deltaTime; // calculate distance to move
             player.transform.position = Vector3.MoveTowards(player.transform.position, otherTeleport.transform.position, step);
 
             if (Vector2.Distance(player.transform.position, otherTeleport.transform.position) < 0.001f)
             {
-                Debug.Log("arrived");
                 player.SetDamageable(true);
                 otherTeleport.isActive = true;
                 player.transform.position = otherTeleport.transform.position;
@@ -42,8 +43,7 @@ public class Teleport : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log(isActive);
-        if (isActive && Time.time > cooldownBegin + cooldownTime)
+        if (!isDisabled && isActive && Time.time > cooldownBegin + cooldownTime)
         {
             player = collision.gameObject.GetComponent<Player>();
             player.SetDamageable(false);
@@ -55,7 +55,15 @@ public class Teleport : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isActive = true;
+        if (!isDisabled)
+        {
+            isActive = true;
+        }
     }
 
+    public void SetDisabledValue(bool value)
+    {
+        isDisabled = value;
+        GetComponent<SpriteRenderer>().enabled = !value;
+    }
 }

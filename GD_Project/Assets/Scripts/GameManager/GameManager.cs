@@ -22,6 +22,6 @@ public class GameManager : MonoBehaviour
     void Restart()
     {
         //aici se poate da load la urmatorul nivel
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainScene");
     }
 }

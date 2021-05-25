@@ -23,7 +23,6 @@ public class Projectile : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collider){
-        Debug.Log("drferfe");
         if(collider.CompareTag("Player")){
             collider.gameObject.GetComponent<Player>().TakeDamage(damage);
             DestroyProjectile();

@@ -6,24 +6,44 @@ public class Enemy : MonoBehaviour
 {
     public int maxHealth = 100;
     public int damage = 50;
-    public Animator animator;
-
+    private bool isFlipped = false;
+    private Rigidbody2D rb;
+    private EnemySpawner spawner; 
     
     int currentHealth;
     // Start is called before the first frame update
     void Start()
     {
-        
+        isFlipped = false;
+        rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int damage)
+    private void Update()
     {
-        currentHealth -= damage;
+        CheckLookDirection();
+    }
+
+    private void CheckLookDirection()
+    {
+        if (!isFlipped && rb.velocity.x < 0 || isFlipped && rb.velocity.x > 0)
+        {
+            isFlipped = !isFlipped;
+            Flip();
+        }
+    }
+
+    private void Flip()
+    {
+        transform.Rotate(0, 180, 0);
+    }
+    public void TakeDamage(int damage)
+    {   currentHealth -= damage;
         StartCoroutine("FlashSprite");
         if (currentHealth <= 0)
         {
-            animator.SetTrigger("dead");
+            spawner.DecreaseVirusCount();
+            Destroy(gameObject);
         }
     }
 
@@ -46,16 +66,17 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-            animator.SetTrigger("dead");
       
 
         }
     }
 
-    public void onDeathAnimationFinished()
+    public void SetSpawner(EnemySpawner spawner)
     {
-        Destroy(gameObject);
+        this.spawner = spawner;
     }
+
+   
  
     
     

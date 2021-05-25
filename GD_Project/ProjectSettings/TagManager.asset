@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - ShootingEnemy
+  - Gel
   layers:
   - Default
   - TransparentFX
@@ -17,11 +18,11 @@ TagManager:
   - 
   - bullet
   - outOfPlay
-  - 
-  - 
-  - 
-  - 
-  - 
+  - playAreaBoundries
+  - player
+  - enemy1
+  - fence
+  - teleport
   - 
   - 
   - 
@@ -54,4 +55,7 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 2901232705
+    locked: 0
+  - name: UI
+    uniqueID: 3266730201
     locked: 0
