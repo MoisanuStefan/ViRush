@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 701908152633565534}
   - component: {fileID: 701908152633565535}
   - component: {fileID: 7834762708858356435}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Projectile2
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701908152633565532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.026, y: 0.213, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damage: 25
+  damage: 30
 --- !u!70 &7834762708858356435
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -110,6 +110,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.009567589, y: 0.27862793}
-  m_Size: {x: 0.5397077, y: 0.5707241}
+  m_Offset: {x: -0.0073732734, y: 0.0053521693}
+  m_Size: {x: 0.50496113, y: 0.51798695}
   m_Direction: 0

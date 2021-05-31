@@ -43,7 +43,7 @@ public class Teleport : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!isDisabled && isActive && Time.time > cooldownBegin + cooldownTime)
+        if (collision.gameObject.CompareTag("Player") && !isDisabled && isActive && Time.time > cooldownBegin + cooldownTime)
         {
             player = collision.gameObject.GetComponent<Player>();
             player.SetDamageable(false);
@@ -55,7 +55,7 @@ public class Teleport : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!isDisabled)
+        if (collision.gameObject.CompareTag("Player") && !isDisabled)
         {
             isActive = true;
         }

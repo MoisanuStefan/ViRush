@@ -27,6 +27,11 @@ public class Projectile : MonoBehaviour
             collider.gameObject.GetComponent<Player>().TakeDamage(damage);
             DestroyProjectile();
         }
+        else if (collider.CompareTag("Fence"))
+        {
+            DestroyProjectile();
+
+        }
     }
   
     void DestroyProjectile(){

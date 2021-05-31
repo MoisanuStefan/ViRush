@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-      
+            Destroy(gameObject);
 
         }
     }

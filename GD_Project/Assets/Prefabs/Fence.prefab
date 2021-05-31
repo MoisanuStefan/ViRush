@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1033803126270874823}
   m_Layer: 13
   m_Name: Fence
-  m_TagString: Untagged
+  m_TagString: Fence
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,3 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b24cf9a22649a42b4cba0f14295c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lives: 3

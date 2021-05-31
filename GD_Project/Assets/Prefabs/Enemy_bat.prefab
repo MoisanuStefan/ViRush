@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3657391888449772521}
   - component: {fileID: 3657391888449772532}
   - component: {fileID: 5610808354318785745}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy_bat
   m_TagString: ShootingEnemy
   m_Icon: {fileID: 0}
@@ -96,7 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1cac06e96eca242be7a7b14b731ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  pointsValue: 20
+  maxHealth: 200
   speed: 2
   stoppingDistance: 6
   retreatDistance: 4

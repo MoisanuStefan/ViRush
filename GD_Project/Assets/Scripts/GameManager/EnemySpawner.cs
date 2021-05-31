@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public float spawnRateIncreaseFactor;
+    public float spawnRateIncreaseInterval;
+
+    public int maxSpawnRate = 2;
     public Healthbar quarantineTraker;
     public int quarantineTreshold = 3;
     public int deathTreshold = 6;
@@ -19,7 +24,8 @@ public class EnemySpawner : MonoBehaviour
     public QuarantineController quarantine;
     public Teleport teleport;
     private bool quarantineEnabled = false;
-
+    private float lastIncreaseTime;
+    private bool isRateIncreasing = true;
 
 
     private float[,] coords_x = { { -32f, -16f }, { -10f, 5.7f }, { 12f, 27f }, { 12f, 27f }, { -32f, -16f } };
@@ -29,8 +35,9 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isRateIncreasing = true;
         quarantineTraker.SetMaxHealth(deathTreshold);
-
+        lastIncreaseTime = Time.time;
         quarantineEnabled = false;
         virusCount = 0;
         quarantineTraker.SetHealth(virusCount);
@@ -40,6 +47,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateSpawnRate();
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -62,9 +70,13 @@ public class EnemySpawner : MonoBehaviour
                 quarantineTraker.SetHealth(virusCount);
 
                 spawnedEnemy = Instantiate(virus, whereToSpawn, Quaternion.identity);
+                spawnedEnemy.SendMessage("SetSpawner", this);
             }
-            spawnedEnemy.SendMessage("SetSpawner", this);
-            
+
+            if (virusCount > deathTreshold)
+            {
+                SceneManager.LoadScene("MainScene");
+            }
      
             
             nextSpawn = Time.time + spawnRate;
@@ -87,5 +99,18 @@ public class EnemySpawner : MonoBehaviour
     {
         quarantineTraker.SetHealth(virusCount);
         virusCount--;
+    }
+
+    private void UpdateSpawnRate()
+    {
+        if (isRateIncreasing && Time.time >= lastIncreaseTime + spawnRateIncreaseInterval)
+        {
+            spawnRate -= spawnRateIncreaseFactor;
+            lastIncreaseTime = Time.time;
+           if (spawnRate == maxSpawnRate)
+            {
+                isRateIncreasing = false;
+            }
+        }
     }
 }

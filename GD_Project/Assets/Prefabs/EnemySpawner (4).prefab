@@ -45,8 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5425213ebbbcf4647ba5f0df813646b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quarantineTreshold: 5
-  spawnRate: 3
+  spawnRateIncreaseFactor: 1
+  spawnRateIncreaseInterval: 20
+  maxSpawnRate: 2
+  quarantineTraker: {fileID: 0}
+  quarantineTreshold: 10
+  deathTreshold: 40
+  spawnRate: 15
   virus: {fileID: 6292734852395523712, guid: fcd161efaf254d0459cc5788987a346a, type: 3}
   bat: {fileID: 3657391888449772520, guid: 9895754dd6566df43becb16886f61e0f, type: 3}
   quarantine: {fileID: 0}
