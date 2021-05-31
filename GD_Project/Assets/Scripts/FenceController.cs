@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class FenceController : MonoBehaviour
 {
+    float clicked = 0;
+    float clicktime = 0;
+    float clickdelay = 0.5f;
     public int lives = 3;
     private Player playerController;
 
@@ -13,21 +17,35 @@ public class FenceController : MonoBehaviour
     }
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
-            transform.Rotate(0, 0, 90);
+            clicked++;
+            if (clicked == 1) clicktime = Time.time;
 
+            if (clicked > 1 && Time.time - clicktime < clickdelay)
+            {
+                clicked = 0;
+                clicktime = 0;
+                transform.Rotate(0, 0, 90);
+
+            }
+            else if (clicked > 2 || Time.time - clicktime > 1) clicked = 0;
+
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            playerController.RestoreFence();
+            Destroy(gameObject);
         }
     }
 
-   
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy")) {
             lives--;
             if (lives == 0)
             {
-                playerController.RestoreFence();
                 Destroy(gameObject);
             }
         

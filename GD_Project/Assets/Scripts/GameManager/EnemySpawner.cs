@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public int quarantineTreshold = 20;
+    public Healthbar quarantineTraker;
+    public int quarantineTreshold = 3;
+    public int deathTreshold = 6;
     public float spawnRate = 2f;
     public GameObject virus;
     public GameObject bat;
+    
     float nextSpawn;
     Vector2 whereToSpawn;
     float randX;
@@ -26,8 +29,12 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        quarantineTraker.SetMaxHealth(deathTreshold);
+
         quarantineEnabled = false;
         virusCount = 0;
+        quarantineTraker.SetHealth(virusCount);
+
     }
 
     // Update is called once per frame
@@ -50,13 +57,16 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
+               
                 virusCount++;
+                quarantineTraker.SetHealth(virusCount);
+
                 spawnedEnemy = Instantiate(virus, whereToSpawn, Quaternion.identity);
             }
             spawnedEnemy.SendMessage("SetSpawner", this);
             
      
-           
+            
             nextSpawn = Time.time + spawnRate;
             if (virusCount >= quarantineTreshold && !quarantineEnabled)
             {
@@ -75,6 +85,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void DecreaseVirusCount()
     {
+        quarantineTraker.SetHealth(virusCount);
         virusCount--;
     }
 }

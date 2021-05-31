@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShootingEnemy : MonoBehaviour
 {
+    public int pointsValue = 20;
     public int maxHealth = 100;
     public float speed;
     public float stoppingDistance;
@@ -55,6 +56,7 @@ public class ShootingEnemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            GameManager.GetInstance().IncrementScore(pointsValue);
             Destroy(gameObject);
         }
     }

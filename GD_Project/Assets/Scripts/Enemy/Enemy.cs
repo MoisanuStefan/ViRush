@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
+    public int pointsValue = 10;
     public int maxHealth = 100;
     public int damage = 50;
     private bool isFlipped = false;
@@ -42,6 +44,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine("FlashSprite");
         if (currentHealth <= 0)
         {
+            GameManager.GetInstance().IncrementScore(pointsValue);
             spawner.DecreaseVirusCount();
             Destroy(gameObject);
         }
